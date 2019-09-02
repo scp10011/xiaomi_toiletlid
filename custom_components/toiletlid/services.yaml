@@ -1,0 +1,16 @@
+nozzle_clean:
+  description: Nozzle clean.
+  fields:
+    entity_id:
+      description: Name(s) of the entities to set
+      example: 'toiletlid.public'
+
+set_ambient_light:
+  description: Set ambient light.
+  fields:
+    entity_id:
+      description: Name(s) of the entities to set
+      example: 'toiletlid.public'
+    color:
+      description: set ambient light 0 to 7 White Yellow Powder Green Purple Blue Orange Red
+      example: '0'

@@ -1,0 +1,8 @@
+{
+    "domain": "toiletlid",
+    "name": "Xiaomi Toiletlid",
+    "documentation": "https://github.com/scp10011/xiaomi_toiletlid",
+    "dependencies": [],
+    "codeowners": ["@scp10011"],
+    "requirements": ["python-miio==0.4.5"]
+}
