@@ -35,6 +35,7 @@ ATTR_MODEL = "model"
 
 ATTR_WORK = "work"
 ATTR_WORK_STATE = "work_state"
+ATTR_WORK_MODE = "work_mode"
 ATTR_AMBIENT_LIGHT = "ambient_light"
 ATTR_FILTER_USE_PERCENTAGE = "filter_use_percentage"
 ATTR_FILTER_REMAINING_TIME = "filter_remaining_time"
@@ -45,6 +46,7 @@ SERVICE_NOZZLE_CLEAN = "nozzle_clean"
 AVAILABLE_ATTRIBUTES_TOILETLID = [
     ATTR_WORK,
     ATTR_WORK_STATE,
+    ATTR_WORK_MODE,
     ATTR_AMBIENT_LIGHT,
     ATTR_FILTER_USE_PERCENTAGE,
     ATTR_FILTER_REMAINING_TIME,
@@ -102,7 +104,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
         entity_ids = params.pop(ATTR_ENTITY_ID, hass.data[DATA_KEY].values())
         update_tasks = []
         for device in filter(
-            lambda x: x.entity_id in entity_ids, hass.data[DATA_KEY].values()
+                lambda x: x.entity_id in entity_ids, hass.data[DATA_KEY].values()
         ):
             if not hasattr(device, method["method"]):
                 continue
@@ -194,8 +196,8 @@ class XiaomiToiletlid(Entity):
         """Nozzle clean."""
         try:
             return (
-                await self.hass.async_add_executor_job(self._device.nozzle_clean)
-                == SUCCESS
+                    await self.hass.async_add_executor_job(self._device.nozzle_clean)
+                    == SUCCESS
             )
         except DeviceException as exc:
             _LOGGER.error("Call nozzle clean failure: %s", exc)
@@ -207,10 +209,10 @@ class XiaomiToiletlid(Entity):
         color = AmbientLightColor(str(ambient_light))
         try:
             return (
-                await self.hass.async_add_executor_job(
-                    lambda: self._device.set_ambient_light(color)
-                )
-                == SUCCESS
+                    await self.hass.async_add_executor_job(
+                        lambda: self._device.set_ambient_light(color)
+                    )
+                    == SUCCESS
             )
         except DeviceException as exc:
             _LOGGER.error("Set ambient light failure: %s", exc)
