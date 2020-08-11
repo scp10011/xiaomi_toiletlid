@@ -9,10 +9,8 @@ from homeassistant.helpers.entity_component import EntityComponent
 _LOGGER = logging.getLogger(__name__)
 DOMAIN = "toiletlid"
 
-SCAN_INTERVAL = timedelta(seconds=30)
+SCAN_INTERVAL = timedelta(seconds=10)
 
-GROUP_NAME_ALL_TOILETLID = "all toiletlid"
-ENTITY_ID_ALL_TOILETLID = group.ENTITY_ID_FORMAT.format(GROUP_NAME_ALL_TOILETLID)
 ENTITY_ID_FORMAT = DOMAIN + ".{}"
 
 
@@ -27,7 +25,7 @@ def is_on(hass, entity_id: str = None) -> bool:
 async def async_setup(hass, config):
     """Set up the Toiletlid component."""
     component = hass.data[DOMAIN] = EntityComponent(
-        _LOGGER, DOMAIN, hass, SCAN_INTERVAL, ENTITY_ID_ALL_TOILETLID
+        _LOGGER, DOMAIN, hass, SCAN_INTERVAL
     )
     await component.async_setup(config)
     return True
