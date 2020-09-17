@@ -33,7 +33,6 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 ATTR_MODEL = "model"
 
-ATTR_WORK = "work"
 ATTR_WORK_STATE = "work_state"
 ATTR_WORK_MODE = "work_mode"
 ATTR_AMBIENT_LIGHT = "ambient_light"
@@ -44,7 +43,6 @@ SERVICE_SET_AMBIENT_LIGHT = "set_ambient_light"
 SERVICE_NOZZLE_CLEAN = "nozzle_clean"
 
 AVAILABLE_ATTRIBUTES_TOILETLID = [
-    ATTR_WORK,
     ATTR_WORK_STATE,
     ATTR_WORK_MODE,
     ATTR_AMBIENT_LIGHT,
@@ -183,9 +181,11 @@ class XiaomiToiletlid(Entity):
             )
             _LOGGER.debug("Got new state: %s", state)
             self._available = True
-            self._state_attrs.update(
-                {key: getattr(state, key) for key in AVAILABLE_ATTRIBUTES_TOILETLID}
-            )
+            for key in AVAILABLE_ATTRIBUTES_TOILETLID:
+                value = getattr(state, key)
+                if isinstance(value, enum.Enum):
+                    value = value.name
+                self._state_attrs.update({key: value})
             self._state = state.is_on
 
         except DeviceException as ex:
