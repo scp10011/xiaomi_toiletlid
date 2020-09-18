@@ -1,4 +1,5 @@
 """Support for Xiaomi Mi Smart toilet seat."""
+import enum
 import asyncio
 import logging
 
